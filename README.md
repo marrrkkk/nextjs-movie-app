@@ -26,16 +26,12 @@ cd nextjs-movie-app
 
 ```bash
 npm install
-# or
-yarn install
 ```
 
 4.Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
 
 ```
 
