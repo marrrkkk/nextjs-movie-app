@@ -23,7 +23,7 @@ const Search = () => {
 
   return (
     <div className="flex flex-col items-center justify-center py-2 font-outfit">
-      <h1 className="text-3xl m-10 cursor-pointer" onClick={handleRefresh}>
+      <h1 className="text-3xl m-10 cursor-pointer select-none" onClick={handleRefresh}>
         Search Movie
       </h1>
       <div>
