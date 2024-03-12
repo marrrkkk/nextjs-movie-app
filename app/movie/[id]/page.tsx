@@ -29,7 +29,7 @@ const Movie = async ({ params }: { params: Id }) => {
         className="w-[70%] lg:w-[20%]"
         src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`}
       />
-      <div className="flex flex-col items-center lg:w-[50%]">
+      <div className="flex flex-col items-center text-center lg:w-[50%]">
         <h1 className="font-bold text-2xl mb-1">{data.title}</h1>
         <p className="text-[#7c828f] mb-2">{data.vote_average.toFixed(1)}/10</p>
         <ul className="text-[#7c828f] flex justify-center space-x-3 flex-wrap w-[90%] mb-3">
