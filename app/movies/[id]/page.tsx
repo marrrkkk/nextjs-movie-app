@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
-import { Star, Clock, Calendar, DollarSign } from "lucide-react";
+import { Star, Clock, Calendar, DollarSign } from 'lucide-react';
 
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -75,43 +75,49 @@ export default function MovieDetailsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <BackButton />
-      <div className="flex flex-col md:flex-row gap-8">
-        <div className="md:w-1/3">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-1">
           <Image
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
             width={500}
             height={750}
-            className="rounded-lg shadow-lg"
+            className="rounded-lg shadow-lg w-full h-auto"
           />
         </div>
-        <div className="md:w-2/3">
-          <h1 className="text-4xl font-bold mb-2">{movie.title}</h1>
+        <div className="lg:col-span-2">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-2">
+            {movie.title}
+          </h1>
           {movie.tagline && (
-            <p className="text-xl text-muted-foreground mb-4 italic">
+            <p className="text-lg sm:text-xl text-muted-foreground mb-4 italic">
               {movie.tagline}
             </p>
           )}
-          <div className="flex flex-wrap items-center gap-4 mb-4 text-sm text-muted-foreground">
-            <div className="flex items-center">
-              <Star className="w-5 h-5 fill-yellow-400 mr-1" />
+          <div className="flex flex-wrap items-center gap-2 mb-4 text-xs sm:text-sm text-muted-foreground">
+            <div className="flex items-center mr-2">
+              <Star className="w-4 h-4 sm:w-5 sm:h-5 fill-yellow-400 mr-1" />
               {movie.vote_average.toFixed(1)}
             </div>
-            <div className="flex items-center">
-              <Clock className="w-5 h-5 mr-1" />
+            <div className="flex items-center mr-2">
+              <Clock className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
               {movie.runtime} min
             </div>
-            <div className="flex items-center">
-              <Calendar className="w-5 h-5 mr-1" />
+            <div className="flex items-center mr-2">
+              <Calendar className="w-4 h-4 sm:w-5 sm:h-5 mr-1" />
               {new Date(movie.release_date).getFullYear()}
             </div>
             <div>{movie.status}</div>
           </div>
           <div className="mb-4">
             {movie.genres.map((genre) => (
-              <Button key={genre.id} variant="outline" className="mr-2 mb-2">
+              <Button
+                key={genre.id}
+                variant="outline"
+                className="mr-2 mb-2 text-xs sm:text-sm"
+              >
                 {genre.name}
               </Button>
             ))}
@@ -133,22 +139,22 @@ export default function MovieDetailsPage() {
               </p>
             </div>
           </div>
-          <h3 className="font-semibold mb-2">Production Companies</h3>
-          <div className="flex flex-wrap gap-4 mb-6">
+          <h3 className="font-semibold mb-2 text-sm sm:text-base">Production Companies</h3>
+          <div className="flex flex-wrap gap-2 sm:gap-4 mb-6">
             {movie.production_companies.map((company) => (
-              <div key={company.id} className="flex items-center">
+              <div key={company.id} className="flex items-center bg-muted rounded-md p-1 sm:p-2">
                 {company.logo_path ? (
                   <Image
                     src={`https://image.tmdb.org/t/p/w200${company.logo_path}`}
                     alt={company.name}
                     width={50}
                     height={25}
-                    className="mr-2"
+                    className="mr-2 w-6 sm:w-8 h-auto"
                   />
                 ) : (
-                  <DollarSign className="w-6 h-6 mr-2" />
+                  <DollarSign className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
                 )}
-                <span>{company.name}</span>
+                <span className="text-xs sm:text-sm">{company.name}</span>
               </div>
             ))}
           </div>
@@ -158,47 +164,38 @@ export default function MovieDetailsPage() {
       <Separator className="my-8" />
 
       <h2 className="text-2xl font-bold mb-4">Cast</h2>
-      <ScrollArea className="w-full whitespace-nowrap rounded-md border">
-        <div className="flex w-max space-x-4 p-4">
-          {credits.cast.slice(0, 20).map((actor: CastMember) => (
-            <div key={actor.id} className="w-[150px] space-y-3">
-              <div className="overflow-hidden rounded-md">
-                <Image
-                  src={
-                    actor.profile_path
-                      ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
-                      : "/placeholder.svg?height=200&width=150"
-                  }
-                  alt={actor.name}
-                  width={150}
-                  height={200}
-                  className="object-cover"
-                />
-              </div>
-              <div className="space-y-1 text-sm">
-                <h3
-                  className="font-medium leading-none truncate"
-                  title={actor.name}
-                >
-                  {actor.name}
-                </h3>
-                <p
-                  className="text-xs text-muted-foreground truncate"
-                  title={actor.character}
-                >
-                  {actor.character}
-                </p>
-              </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        {credits.cast.slice(0, 12).map((actor: CastMember) => (
+          <div key={actor.id} className="space-y-2">
+            <div className="overflow-hidden rounded-md aspect-[3/4]">
+              <Image
+                src={
+                  actor.profile_path
+                    ? `https://image.tmdb.org/t/p/w200${actor.profile_path}`
+                    : "/placeholder.svg?height=300&width=200"
+                }
+                alt={actor.name}
+                width={200}
+                height={300}
+                className="object-cover w-full h-full"
+              />
             </div>
-          ))}
-        </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
+            <div className="space-y-1">
+              <h3 className="font-medium text-sm leading-none truncate" title={actor.name}>
+                {actor.name}
+              </h3>
+              <p className="text-xs text-muted-foreground truncate" title={actor.character}>
+                {actor.character}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <Separator className="my-8" />
 
       <h2 className="text-2xl font-bold mb-4">Similar Movies</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-4">
         {similarMovies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
@@ -210,11 +207,11 @@ export default function MovieDetailsPage() {
 function MovieDetailsSkeleton() {
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex flex-col md:flex-row gap-8">
-        <div className="md:w-1/3">
+      <div className="flex flex-col lg:flex-row gap-8">
+        <div className="lg:w-1/3">
           <Skeleton className="w-full aspect-[2/3] rounded-lg" />
         </div>
-        <div className="md:w-2/3">
+        <div className="lg:w-2/3">
           <Skeleton className="h-10 w-3/4 mb-2" />
           <Skeleton className="h-6 w-1/2 mb-4" />
           <div className="flex gap-2 mb-4">
@@ -252,3 +249,4 @@ function MovieDetailsSkeleton() {
     </div>
   );
 }
+
