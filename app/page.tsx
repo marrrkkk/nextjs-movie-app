@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from "react"
-import { useSearchParams, useRouter } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { Search } from 'lucide-react'
 
 import { Input } from "@/components/ui/input"
@@ -25,7 +25,6 @@ export default function MoviesPage() {
   })
   const [loading, setLoading] = useState(false)
   const [totalPages, setTotalPages] = useState(1)
-  const searchParams = useSearchParams()
   const router = useRouter()
 
   const getMovies = useCallback(async () => {
